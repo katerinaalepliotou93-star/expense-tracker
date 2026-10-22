@@ -11,7 +11,11 @@ public class ExpenseApiClient {
 
     public ExpenseApiClient() {
         this.restClient = RestClient.builder()
-                .baseUrl("http://localhost:8081")
+                .baseUrl(System.getProperty(
+                        "expense.service.url",
+                        System.getenv().getOrDefault(
+                                "EXPENSE_SERVICE_URL",
+                                "http://localhost:8081")))
                 .build();
     }
 

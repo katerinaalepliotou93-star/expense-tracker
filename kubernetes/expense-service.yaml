@@ -1,0 +1,46 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expense-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expense-service
+  template:
+    metadata:
+      labels:
+        app: expense-service
+    spec:
+      containers:
+        - name: expense-service
+          image: kaalepou/expense-service:1.1
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_URL
+              value: jdbc:postgresql://postgres:5432/expenses
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expense-service
+spec:
+  type: NodePort
+  selector:
+    app: expense-service
+  ports:
+    - port: 8081
+      targetPort: 8081
+      nodePort: 30081
