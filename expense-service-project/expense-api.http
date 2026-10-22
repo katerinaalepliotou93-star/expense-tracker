@@ -1,0 +1,17 @@
+### Check service health
+GET http://localhost:8081/api/health
+
+### List expenses
+GET http://localhost:8081/api/expenses
+
+### Create an expense
+POST http://localhost:8081/api/expenses
+Content-Type: application/json
+
+{
+  "description": "Weekly groceries",
+  "amount": 45.90,
+  "category": "Food",
+  "expenseDate": "2026-10-21",
+  "currency": "EUR"
+}
