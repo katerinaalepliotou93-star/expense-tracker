@@ -49,14 +49,19 @@ Client (curl or browser)
        |
        | REST / HTTP
        v
-Expense Service <------ Statistics Service
-       |                  |
-       |                  | REST request to Expense Service
+Expense Service <------ Statistics Service (REST Request to Expense Service)
+       |                  
+       |
+       |
+       |    SQL via Spring Data JPA              
        v
    PostgreSQL
 
+Statistics Service requests expense data from
+Expense Service through its REST API.
+
 Kubernetes Services provide internal service discovery.
-A PersistentVolumeClaim provides persistent database storage.
+A PersistentVolumeClaim provides database storage.
 ```
 
 ## 4. Technologies
@@ -108,10 +113,10 @@ See the README files inside each microservice directory for additional instructi
 
 The application images are published on Docker Hub:
 
-- Expense Service: `kaalepou/expense-service:1.1`
-- Statistics Service: `kaalepou/statistics-service:1.0`
+- Expense Service: `kaalepou/expense-service:1.2`
+- Statistics Service: `kaalepou/statistics-service:1.1`
 
-The Expense Service image tag `1.1` contains the updated database configuration that supports environment variables.
+The Expense Service image tag `1.2` contains the updated database configuration that supports environment variables.
 
 ## 8. Kubernetes Deployment
 
@@ -166,6 +171,16 @@ curl http://localhost:8082/api/statistics/categories
 ```
 
 Keep each port-forward process running while using its corresponding local port.
+
+### Accessing the Web Interface
+
+The browser interface is served by the Expense Service. After starting the port-forward process, open the following address in a browser:
+
+`http://localhost:8081/`
+
+The interface allows users to add and view expenses and retrieve spending statistics from the Statistics Service.
+
+Keep the Expense Service and Statistics Service port-forward processes running while using the interface.
 
 ## 9. Testing
 
