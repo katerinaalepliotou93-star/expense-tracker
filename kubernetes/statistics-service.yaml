@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: statistics-service
-          image: kaalepou/statistics-service:1.0
+          image: kaalepou/statistics-service:1.1
           ports:
             - containerPort: 8082
           env:
